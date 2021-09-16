@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Search.css'
 import '../styles/listings.css'
+import EventCards from './EventCards';
 
 const LandingPage = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -35,22 +36,18 @@ const LandingPage = () => {
           WHATS ON?
         </button>
       </form>
-      {eventData.map((listing) => {
-        return (
-          <ul className="listings">
-            <li>{listing.name}</li>
-            <div div className="images-align">
-              <img className="images" src={listing.images[4].url} alt="band" />
-            </div>
-            <li>{listing._embedded.venues[0].name} </li>
-            <li>{listing.dates.start.localDate}</li>
-            <li>{listing.dates.start.localTime}</li>
-            <a target="#" href={listing.url}>
+      {eventData.map((listing) => (
+          <EventCards
+            listing={listing.name}
+            image={<img className="images" src={listing.images[4].url} alt="band" />}
+            venue={listing._embedded.venues[0].name}
+            date={listing.dates.start.localDate}
+            time={listing.dates.start.localTime}
+            tickets={<a target="#" href={listing.url}>
               Buy Tickets
-            </a>
-          </ul>
-        );
-      })}
+            </a>}
+          />
+        ))};
     </div>
   );
 };
